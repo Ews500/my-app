@@ -41,7 +41,7 @@ jobs:
       # 5. Update Kubernetes manifest with new image tag
       - name: Update deployment.yaml with new image
         run: |
-          sed -i "s|image: .*|image: ghcr.io/${{ github.repository }}:latest|" k8s/deployment.yaml
+          sed -i "s|image: .*|image: ghcr.io/ews500/my-app:latest|" k8s/deployment.yaml
 
       # 6. Commit and push manifest change
       - name: Commit and push changes
