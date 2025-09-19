@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build-and-update:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout application code
+      # 1. Checkout the repo
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -26,7 +26,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 4. Build and push image
+      # 4. Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -34,13 +34,16 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository }}:latest
 
-      # 5. Update manifests repo with new image tag
-      - name: Update manifests repo
+      # 5. Update Kubernetes manifest with new image tag
+      - name: Update deployment.yaml with new image
         run: |
-          git clone https://x-access-token:${{ secrets.MANIFESTS_REPO_TOKEN }}@github.com/<your-username>/<manifests-repo>.git
-          cd <manifests-repo>
           sed -i "s|image: .*|image: ghcr.io/${{ github.repository }}:latest|" k8s/deployment.yaml
+
+      # 6. Commit and push manifest change
+      - name: Commit and push changes
+        run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git commit -am "Update image to latest from CI"
+          git add k8s/deployment.yaml
+          git commit -m "Update image to latest from CI"
           git push
