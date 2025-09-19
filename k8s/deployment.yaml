@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: website
-          image: my-app:latest          # local image tag
+          image: my-app:dev          # local image tag
           imagePullPolicy: IfNotPresent # don't pull from registry if local exists
           ports:
             - containerPort: 80
