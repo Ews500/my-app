@@ -32,7 +32,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/ews500/my-app:latest
 
       # 5. Update Kubernetes manifest with new image tag
       - name: Update deployment.yaml with new image
