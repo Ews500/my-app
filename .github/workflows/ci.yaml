@@ -17,9 +17,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Set lowercase image name with commit SHA
-      - name: Set image name
-        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}:${GITHUB_SHA}" >> $GITHUB_ENV
+      # 2. Set lowercase image name in env
+      - name: Set lowercase image name
+        run: echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
 
       # 3. Set up Docker Buildx
       - name: Set up Docker Buildx
@@ -33,12 +33,12 @@ jobs:
           username: ews500
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 5. Build and push image with two tags: commit SHA + latest
+      # 5. Build and push image with commit SHA + latest
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           tags: |
-           ghcr.io/${{ toLower(github.repository) }}:${{ github.sha }}
-           ghcr.io/${{ toLower(github.repository) }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.IMAGE_NAME }}:latest
