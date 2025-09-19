@@ -13,15 +13,15 @@ spec:
         app: website
     spec:
       containers:
-      - name: website
-      image: ghcr.io/Ews500/my-app:latest
-    ports:
-      - containerPort: 80
-    resources:
-      requests:
-        cpu: "100m"       # 0.1 CPU
-        memory: "128Mi"   # 128 MB RAM
-      limits:
-        cpu: "250m"       # 0.25 CPU
-        memory: "256Mi"   # 256 MB RAM
-
+        - name: website
+          image: my-app:latest          # local image tag
+          imagePullPolicy: IfNotPresent # don't pull from registry if local exists
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
