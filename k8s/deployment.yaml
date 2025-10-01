@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: website
 spec:
+  revisionHistoryLimit: 3 # keep 3 old ReplicaSets
   replicas: 1
   selector:
     matchLabels:
