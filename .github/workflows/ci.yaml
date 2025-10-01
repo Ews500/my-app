@@ -16,6 +16,8 @@ jobs:
       # 1. Checkout repo
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       # 2. Set lowercase image name in env
       - name: Set lowercase image name
