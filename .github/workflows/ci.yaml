@@ -43,7 +43,7 @@ jobs:
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
 
-          # 6. Update deployment.yaml with new SHA tag
+      # 6. Update deployment.yaml with new SHA tag
       - name: Update image tag in deployment.yaml
         run: |
           sed -i "s|image: ${{ env.IMAGE_NAME }}:.*|image: ${{ env.IMAGE_NAME }}:${{ github.sha }}|" k8s/deployment.yaml
