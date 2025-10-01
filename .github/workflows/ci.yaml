@@ -42,3 +42,17 @@ jobs:
           tags: |
             ${{ env.IMAGE_NAME }}:${{ github.sha }}
             ${{ env.IMAGE_NAME }}:latest
+
+          # 6. Update deployment.yaml with new SHA tag
+      - name: Update image tag in deployment.yaml
+        run: |
+          sed -i "s|image: ${{ env.IMAGE_NAME }}:.*|image: ${{ env.IMAGE_NAME }}:${{ github.sha }}|" k8s/deployment.yaml
+
+      # 7. Commit and push manifest change
+      - name: Commit and push updated manifest
+        run: |
+          git config user.name "ews500"
+          git config user.email "ewandavies05@gmail.com"
+          git add k8s/deployment.yaml
+          git commit -m "Update image to ${{ github.sha }}"
+          git push
