@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'k8s/deployment.yaml'  # ignore changes to deployment.yaml to avoid loops
 
 permissions:
   packages: write   # allow pushing to GHCR
