@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: website
-          image: ghcr.io/ews500/my-app:8e6ea6a2abcdae74dd4cf8139a246b366d7dcfc8
+          image: ghcr.io/ews500/my-app:c6801a4f5946a44f6d7ff44ab24732b6d6fbfa13
           imagePullPolicy: IfNotPresent               # don't pull from registry if local exists
           ports:
             - containerPort: 80
